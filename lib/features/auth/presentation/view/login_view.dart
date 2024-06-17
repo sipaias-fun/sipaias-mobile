@@ -57,7 +57,12 @@ class _LoginViewState extends State<LoginView> {
     return Padding(
       padding: const EdgeInsets.all(Sizes.lg),
       child: BlocConsumer<AuthBloc, AuthState>(
-        listener: (context, state) {},
+        listener: (context, state) {
+          if (state is AuthSuccess) {
+            debugPrint("COME");
+            Navigator.pushNamed(context, '/home');
+          }
+        },
         builder: (context, state) {
           return Column(
             mainAxisAlignment: MainAxisAlignment.center,

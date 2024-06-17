@@ -4,6 +4,7 @@ import 'package:sipaias_fun_mobile/cores/config/init.dart';
 import 'package:sipaias_fun_mobile/cores/theme/i_colors.dart';
 import 'package:sipaias_fun_mobile/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:sipaias_fun_mobile/features/auth/presentation/view/login_view.dart';
+import 'package:sipaias_fun_mobile/features/home/presentation/view/home_view.dart';
 
 void main() async {
   await initDependencies();
@@ -38,6 +39,9 @@ class _MyAppState extends State<MyApp> {
         useMaterial3: true,
         fontFamily: 'Poppins',
       ),
+      routes: {
+        '/home': (context) => const HomeView(),
+      },
       home: const LoginView(),
     );
   }

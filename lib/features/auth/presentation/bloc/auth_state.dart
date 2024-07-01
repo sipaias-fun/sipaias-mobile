@@ -19,3 +19,12 @@ final class AuthFailure extends AuthState {
 
   const AuthFailure(this.error);
 }
+
+final class AuthValidationError extends AuthState {
+  final Map<String, String> validationErrors;
+
+  const AuthValidationError(this.validationErrors);
+
+  @override
+  List<Object> get props => [validationErrors];
+}

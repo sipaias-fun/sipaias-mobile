@@ -1,12 +1,20 @@
 part of '../domain.dart';
 
 class LoginResponse {
-  String accessToken;
-  String refreshToken;
-  int expiredToken;
+  String? accessToken;
+  String? refreshToken;
 
-  LoginResponse(
-      {required this.accessToken,
-      required this.refreshToken,
-      required this.expiredToken});
+  LoginResponse({this.accessToken, this.refreshToken});
+
+  LoginResponse.fromJson(Map<String, dynamic> json) {
+    accessToken = json['access_token'];
+    refreshToken = json['refresh_token'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['access_token'] = accessToken;
+    data['refresh_token'] = refreshToken;
+    return data;
+  }
 }

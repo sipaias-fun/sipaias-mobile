@@ -30,7 +30,7 @@ class _HomeViewState extends State<HomeView> {
   void animateTheIcon(int index) {
     riveIconInputs[index].change(true);
     Future.delayed(
-      const Duration(seconds: 1),
+      const Duration(seconds: 5),
       () {
         riveIconInputs[index].change(false);
       },

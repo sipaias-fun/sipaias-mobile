@@ -7,6 +7,7 @@ import 'package:sipaias_fun_mobile/cores/presentation/component/buttons/model/bu
 import 'package:sipaias_fun_mobile/cores/presentation/component/input_text/i_textfield.dart';
 import 'package:sipaias_fun_mobile/cores/theme/i_colors.dart';
 import 'package:sipaias_fun_mobile/cores/theme/i_sizes.dart';
+import 'package:sipaias_fun_mobile/cores/utils/error.dart';
 import 'package:sipaias_fun_mobile/features/auth/presentation/bloc/auth_bloc.dart';
 
 class LoginView extends StatefulWidget {
@@ -19,7 +20,7 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
-  TextEditingController emailController = TextEditingController();
+  TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   bool value = false;
 
@@ -59,8 +60,7 @@ class _LoginViewState extends State<LoginView> {
       child: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state is AuthSuccess) {
-            debugPrint("COME");
-            Navigator.pushNamed(context, '/home');
+            // Navigator.pushNamed(context, '/home');
           }
         },
         builder: (context, state) {
@@ -85,17 +85,30 @@ class _LoginViewState extends State<LoginView> {
                 textAlign: TextAlign.center,
               ),
               context.sbHeight(size: Sizes.base),
+              if (state is AuthFailure) ...[
+                Text(
+                  state.error,
+                  style: context.labelMedium?.copyWith(
+                    fontWeight: FontWeight.w700,
+                    color: Palette.red600,
+                  ),
+                )
+              ],
+              context.sbHeight(size: Sizes.base),
               ITextField.primary(
-                label: 'Email',
+                label: 'Username',
                 labelStyle: context.labelMedium?.copyWith(
                   color: Palette.white,
                   fontWeight: FontWeight.w600,
                 ),
-                controller: emailController,
+                controller: usernameController,
                 style: context.labelMedium,
-                hintText: 'Masukkan email',
+                hintText: 'Masukkan username',
                 hintStyle:
                     context.labelMedium?.copyWith(color: Palette.gray400),
+                errorText: state is AuthValidationError
+                    ? getErrorText(state.validationErrors, 'username')
+                    : null,
               ),
               ITextField.primary(
                 label: 'Password',
@@ -109,6 +122,9 @@ class _LoginViewState extends State<LoginView> {
                 hintText: 'Masukkan password',
                 hintStyle:
                     context.labelMedium?.copyWith(color: Palette.gray400),
+                errorText: state is AuthValidationError
+                    ? getErrorText(state.validationErrors, 'password')
+                    : null,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -155,7 +171,7 @@ class _LoginViewState extends State<LoginView> {
                 onPressed: () {
                   context.read<AuthBloc>().add(
                         AuthLogin(
-                          email: emailController.text,
+                          username: usernameController.text,
                           password: passwordController.text,
                         ),
                       );

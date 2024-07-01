@@ -269,7 +269,8 @@ class ITextField extends StatelessWidget {
         note.isNotEmpty == true
             ? context.sbHeight(size: context.padding0)
             : const SizedBox(),
-        _note(context)
+        _note(context),
+        errorText == null ? const SizedBox() : context.sbHeight(size: Sizes.xs)
       ],
     );
   }
@@ -328,7 +329,7 @@ class ITextField extends StatelessWidget {
     return customErrorText == null
         ? const SizedBox()
         : Padding(
-            padding: EdgeInsets.only(left: context.padding2, top: 7),
+            padding: const EdgeInsets.only(left: 0, top: 7),
             child: Text(
               customErrorText!,
               style: context.bodySmall?.copyWith(

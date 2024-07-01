@@ -15,10 +15,6 @@ class DioInterceptor extends Interceptor {
       "Content-Type": "application/json",
       "Authorization": "Bearer $getAuthToken",
     });
-    // get token from the storage
-    options.headers.addAll({
-      "Authorization": "Bearer $getAuthToken",
-    });
     return super.onRequest(options, handler);
   }
 

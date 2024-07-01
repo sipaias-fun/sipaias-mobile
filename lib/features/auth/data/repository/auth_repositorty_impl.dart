@@ -16,9 +16,9 @@ class AuthRepositoryImpl implements AuthRepository {
       {required LoginRequest loginRequest}) async {
     try {
       final response = await authDatasource.login(loginRequest);
-      return right(response);
+      return right(response.data);
     } on ServerExceptions catch (e) {
-      return left(Failure(e.message));
+      return left(Failure(e.message, e.code!));
     }
   }
 

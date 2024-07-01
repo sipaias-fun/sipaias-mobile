@@ -22,21 +22,51 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     AuthSignUp event,
     Emitter<AuthState> emit,
   ) async {
-    debugPrint("${event.email} ${event.password}");
+    debugPrint("${event.username} ${event.password}");
   }
 
   void _onAuthLogin(
     AuthLogin event,
     Emitter<AuthState> emit,
   ) async {
+    // Perform input validation
+    Map<String, String> errors = _validateInput(event.username, event.password);
+
+    debugPrint(errors.toString());
+
+    if (errors.isNotEmpty) {
+      emit(AuthValidationError(errors));
+      return;
+    }
+
     final res = await _userSignIn(LoginRequest(
-      email: event.email,
+      username: event.username,
       password: event.password,
     ));
 
     res.fold(
-      (l) => emit(AuthFailure(l.message)),
-      (r) => emit(AuthSuccess()),
+      (l) {
+        debugPrint(l.code);
+        if (l.code == '404') {
+          emit(const AuthFailure("Username or password is wrong"));
+          return;
+        }
+        emit(AuthFailure(l.message));
+      },
+      (r) {
+        emit(AuthSuccess());
+      },
     );
+  }
+
+  Map<String, String> _validateInput(String username, String password) {
+    Map<String, String> errors = {};
+    if (username.isEmpty) {
+      errors['username'] = 'Username is required';
+    }
+    if (password.isEmpty) {
+      errors['password'] = 'Password is required';
+    }
+    return errors;
   }
 }

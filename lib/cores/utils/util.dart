@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sipaias_fun_mobile/features/auth/presentation/view/login_view.dart';
+import 'package:sipaias_fun_mobile/features/dashboard/presentation/view/dashboard_view.dart';
+import 'package:sipaias_fun_mobile/features/home/presentation/view/home_view.dart';
 
 part 'screen.dart';
 

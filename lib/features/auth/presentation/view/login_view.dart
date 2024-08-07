@@ -4,11 +4,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sipaias_fun_mobile/cores/extensions/context_extensions.dart';
 import 'package:sipaias_fun_mobile/cores/presentation/component/buttons/i_button.dart';
 import 'package:sipaias_fun_mobile/cores/presentation/component/buttons/model/button_models.dart';
+import 'package:sipaias_fun_mobile/cores/presentation/component/dialog/loading_screen.dart';
 import 'package:sipaias_fun_mobile/cores/presentation/component/input_text/i_textfield.dart';
 import 'package:sipaias_fun_mobile/cores/theme/i_colors.dart';
 import 'package:sipaias_fun_mobile/cores/theme/i_sizes.dart';
 import 'package:sipaias_fun_mobile/cores/utils/error.dart';
 import 'package:sipaias_fun_mobile/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:sipaias_fun_mobile/features/home/presentation/view/home_view.dart';
 
 class LoginView extends StatefulWidget {
   static const routeName = '/LoginView';
@@ -59,8 +61,17 @@ class _LoginViewState extends State<LoginView> {
       padding: const EdgeInsets.all(Sizes.lg),
       child: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {
+          if (state.isLoading) {
+            LoadingScreen.instance().show(context: context);
+          } else {
+            LoadingScreen.instance().hide();
+          }
+
           if (state is AuthSuccess) {
-            // Navigator.pushNamed(context, '/home');
+            Navigator.pushReplacementNamed(
+              context,
+              HomeView.routeName,
+            );
           }
         },
         builder: (context, state) {
@@ -106,7 +117,7 @@ class _LoginViewState extends State<LoginView> {
                 hintText: 'Masukkan username',
                 hintStyle:
                     context.labelMedium?.copyWith(color: Palette.gray400),
-                errorText: state is AuthValidationError
+                errorText: state is AuthFailure
                     ? getErrorText(state.validationErrors, 'username')
                     : null,
               ),
@@ -122,7 +133,7 @@ class _LoginViewState extends State<LoginView> {
                 hintText: 'Masukkan password',
                 hintStyle:
                     context.labelMedium?.copyWith(color: Palette.gray400),
-                errorText: state is AuthValidationError
+                errorText: state is AuthFailure
                     ? getErrorText(state.validationErrors, 'password')
                     : null,
               ),
@@ -176,7 +187,10 @@ class _LoginViewState extends State<LoginView> {
                         ),
                       );
                 },
-                text: (state is AuthLoading) ? "LOADING..." : "Sign In",
+                text: (state.isLoading) ? "LOADING..." : "Sign In",
+                state: (state.isLoading)
+                    ? ButtonState.disabled
+                    : ButtonState.enabled,
                 type: ButtonType.primary,
                 size: ButtonSize.medium,
                 foregroundColor: Colors.white,

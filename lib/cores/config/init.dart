@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:sipaias_fun_mobile/cores/config/api/init.dart';
+import 'package:sipaias_fun_mobile/cores/config/bloc/general_bloc.dart';
 import 'package:sipaias_fun_mobile/features/auth/data/datasource/auth_datasource_impl.dart';
 import 'package:sipaias_fun_mobile/features/auth/data/repository/auth_repositorty_impl.dart';
 import 'package:sipaias_fun_mobile/features/auth/domain/datasource/auth_datasource.dart';
@@ -16,6 +17,8 @@ Future<void> initDependencies() async {
   final Dio apiClient = ApiClient().init();
 
   serviceLocator.registerLazySingleton<Dio>(() => apiClient);
+
+  serviceLocator.registerLazySingleton<GeneralBloc>(() => GeneralBloc());
 }
 
 void _initAuth() {

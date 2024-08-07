@@ -12,8 +12,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   AuthBloc({required UserSignIn userSignIn})
       : _userSignIn = userSignIn,
-        super(AuthInitial()) {
-    on<AuthEvent>((_, emit) => emit(AuthLoading()));
+        super(const AuthInitial()) {
+    on<AuthEvent>((_, emit) => emit(const AuthLoading()));
     on<AuthSignUp>(_onAuthSignUp);
     on<AuthLogin>(_onAuthLogin);
   }
@@ -25,17 +25,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     debugPrint("${event.username} ${event.password}");
   }
 
-  void _onAuthLogin(
+  Future<void> _onAuthLogin(
     AuthLogin event,
     Emitter<AuthState> emit,
   ) async {
-    // Perform input validation
     Map<String, String> errors = _validateInput(event.username, event.password);
 
-    debugPrint(errors.toString());
-
     if (errors.isNotEmpty) {
-      emit(AuthValidationError(errors));
+      emit(AuthFailure("", errors));
       return;
     }
 
@@ -46,15 +43,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     res.fold(
       (l) {
-        debugPrint(l.code);
         if (l.code == '404') {
-          emit(const AuthFailure("Username or password is wrong"));
+          emit(const AuthFailure("Username or password is wrong", {}));
           return;
         }
-        emit(AuthFailure(l.message));
+        emit(AuthFailure(l.message, const {}));
       },
       (r) {
-        emit(AuthSuccess());
+        emit(const AuthSuccess());
       },
     );
   }

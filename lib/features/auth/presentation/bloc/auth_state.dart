@@ -1,30 +1,33 @@
 part of 'auth_bloc.dart';
 
 @immutable
-sealed class AuthState extends Equatable {
-  const AuthState();
+abstract class AuthState extends Equatable {
+  final bool isLoading;
+  const AuthState({required this.isLoading});
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [isLoading];
 }
 
-final class AuthInitial extends AuthState {}
+class AuthInitial extends AuthState {
+  const AuthInitial() : super(isLoading: false);
+}
 
-final class AuthLoading extends AuthState {}
+class AuthLoading extends AuthState {
+  const AuthLoading() : super(isLoading: true);
+}
 
-final class AuthSuccess extends AuthState {}
+class AuthSuccess extends AuthState {
+  const AuthSuccess() : super(isLoading: false);
+}
 
-final class AuthFailure extends AuthState {
+class AuthFailure extends AuthState {
   final String error;
-
-  const AuthFailure(this.error);
-}
-
-final class AuthValidationError extends AuthState {
   final Map<String, String> validationErrors;
 
-  const AuthValidationError(this.validationErrors);
+  const AuthFailure(this.error, this.validationErrors)
+      : super(isLoading: false);
 
   @override
-  List<Object> get props => [validationErrors];
+  List<Object?> get props => [isLoading, error, validationErrors];
 }

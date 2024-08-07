@@ -3,6 +3,7 @@ import 'package:rive/rive.dart';
 import 'package:sipaias_fun_mobile/cores/presentation/rive/rive.dart';
 import 'package:sipaias_fun_mobile/cores/theme/i_colors.dart';
 import 'package:sipaias_fun_mobile/features/blog/presentation/view/blog_view.dart';
+import 'package:sipaias_fun_mobile/features/dashboard/presentation/view/dashboard_view.dart';
 import 'package:sipaias_fun_mobile/features/feeds/presentation/view/feeds_view.dart';
 import 'package:sipaias_fun_mobile/features/profile/presentation/view/profile_view.dart';
 
@@ -20,7 +21,7 @@ class _HomeViewState extends State<HomeView> {
   List<StateMachineController?> controllers = [];
   int selctedNavIndex = 0;
   List<Widget> page = [
-    const FeedsView(),
+    const DashboardView(),
     const BlogView(),
     const ProfileView(),
     const BlogView(),

@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sipaias_fun_mobile/cores/extensions/context_extensions.dart';
 import 'package:sipaias_fun_mobile/cores/presentation/component/buttons/i_button.dart';
 import 'package:sipaias_fun_mobile/cores/presentation/component/buttons/model/button_models.dart';
-import 'package:sipaias_fun_mobile/cores/presentation/component/dialog/loading_screen.dart';
 import 'package:sipaias_fun_mobile/cores/presentation/component/input_text/i_textfield.dart';
 import 'package:sipaias_fun_mobile/cores/theme/i_colors.dart';
 import 'package:sipaias_fun_mobile/cores/theme/i_sizes.dart';
@@ -61,12 +60,6 @@ class _LoginViewState extends State<LoginView> {
       padding: const EdgeInsets.all(Sizes.lg),
       child: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {
-          if (state.isLoading) {
-            LoadingScreen.instance().show(context: context);
-          } else {
-            LoadingScreen.instance().hide();
-          }
-
           if (state is AuthSuccess) {
             Navigator.pushReplacementNamed(
               context,
@@ -96,7 +89,7 @@ class _LoginViewState extends State<LoginView> {
                 textAlign: TextAlign.center,
               ),
               context.sbHeight(size: Sizes.base),
-              if (state is AuthFailure) ...[
+              if (state is AuthFailure && state.error.isNotEmpty) ...[
                 Text(
                   state.error,
                   style: context.labelMedium?.copyWith(

@@ -5,3 +5,7 @@ Map<String, Widget Function(BuildContext)> route = {
   DashboardView.routeName: (context) => const DashboardView(),
   HomeView.routeName: (context) => const HomeView(),
 };
+
+class NavigationService {
+  static GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+}

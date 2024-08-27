@@ -23,9 +23,9 @@ class _HomeViewState extends State<HomeView> {
   List<Widget> page = [
     const DashboardView(),
     const BlogView(),
-    const ProfileView(),
     const BlogView(),
     const FeedsView(),
+    const ProfileView(),
   ];
 
   void animateTheIcon(int index) {
@@ -59,19 +59,24 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Palette.indigo1000, // Ensure transparent Scaffold
       body: page[selctedNavIndex],
       resizeToAvoidBottomInset: true,
       bottomNavigationBar: SafeArea(
         child: Container(
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
+            color: Palette.indigo1000, // Ensure no opacity issues here
             border: const Border(
               top: BorderSide(
                 color: Palette.amber600,
                 width: 2,
               ),
             ),
-            color: Palette.indigo1000.withOpacity(1),
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(20),
+              topRight: Radius.circular(20),
+            ),
             boxShadow: [
               BoxShadow(
                 color: Palette.indigo1000.withOpacity(0.3),

@@ -25,7 +25,7 @@ class AuthFailure extends AuthState {
   final String error;
   final Map<String, String> validationErrors;
 
-  const AuthFailure(this.error, this.validationErrors)
+  const AuthFailure(this.error, [this.validationErrors = const {}])
       : super(isLoading: false);
 
   @override

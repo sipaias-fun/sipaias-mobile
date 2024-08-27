@@ -17,42 +17,53 @@ class _FeedsViewState extends State<FeedsView> {
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion(
-      value: SystemUiOverlayStyle.light.copyWith(
+      value: const SystemUiOverlayStyle().copyWith(
         statusBarColor: Palette.transparent,
         statusBarIconBrightness: Brightness.light,
       ),
       child: Scaffold(
-        body: CustomScrollView(
-          physics: const ClampingScrollPhysics(),
-          slivers: [
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: const EdgeInsets.all(Sizes.lg),
-                child: Text(
-                  "Feeds",
-                  style: context.titleMedium?.copyWith(
-                    fontWeight: FontWeight.w600,
+        body: SafeArea(
+          child: Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                colors: [Palette.sky1000, Palette.indigo1000],
+                transform: GradientRotation(45),
+              ),
+            ),
+            child: CustomScrollView(
+              physics: const ClampingScrollPhysics(),
+              slivers: [
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.all(Sizes.lg),
+                    child: Text(
+                      "Feeds",
+                      style: context.titleMedium?.copyWith(
+                        fontWeight: FontWeight.w600,
+                        color: Palette.white,
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ),
-            SliverPadding(
-              padding: const EdgeInsets.symmetric(horizontal: Sizes.lg),
-              sliver: SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  (BuildContext context, int index) {
-                    return Column(
-                      children: [
-                        _feedComponent(context),
-                        const SizedBox(height: 16), // Add gap between items
-                      ],
-                    );
-                  },
-                  childCount: 10,
+                SliverPadding(
+                  padding: const EdgeInsets.symmetric(horizontal: Sizes.lg),
+                  sliver: SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                      (BuildContext context, int index) {
+                        return Column(
+                          children: [
+                            _feedComponent(context),
+                            const SizedBox(height: 16), // Add gap between items
+                          ],
+                        );
+                      },
+                      childCount: 10,
+                    ),
+                  ),
                 ),
-              ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
@@ -62,7 +73,7 @@ class _FeedsViewState extends State<FeedsView> {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        border: Border.all(color: Colors.black12),
+        border: Border.all(color: Colors.white30),
       ),
       child: Column(
         children: [
@@ -81,6 +92,7 @@ class _FeedsViewState extends State<FeedsView> {
                   'Exploring the Wonders of Nature: A Journey',
                   style: context.labelMedium?.copyWith(
                     fontWeight: FontWeight.w600,
+                    color: Palette.white,
                   ),
                 ),
                 context.sbHeight(size: context.padding1),
@@ -88,6 +100,7 @@ class _FeedsViewState extends State<FeedsView> {
                   'This card delves into the beautiful landscapes and diverse wildlife that nature has to offer, providing insights and stunning visuals.',
                   style: context.labelSmall?.copyWith(
                     fontWeight: FontWeight.w400,
+                    color: Palette.white,
                   ),
                 ),
               ],

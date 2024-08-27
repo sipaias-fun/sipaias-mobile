@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sipaias_fun_mobile/cores/config/bloc/general_bloc.dart';
 import 'package:sipaias_fun_mobile/cores/config/init.dart';
 import 'package:sipaias_fun_mobile/cores/theme/i_colors.dart';
+import 'package:sipaias_fun_mobile/cores/utils/snackbar.dart';
 import 'package:sipaias_fun_mobile/cores/utils/util.dart';
 import 'package:sipaias_fun_mobile/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:sipaias_fun_mobile/features/auth/presentation/view/login_view.dart';
@@ -38,6 +39,8 @@ class _MyAppState extends State<MyApp> {
     context.read<GeneralBloc>().add(ContextEvent(context));
 
     return MaterialApp(
+      scaffoldMessengerKey: SnackbarService.scaffoldKey,
+      navigatorKey: NavigationService.navigatorKey,
       color: Palette.white,
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',

@@ -9,13 +9,28 @@ class DioInterceptor extends Interceptor {
     return StorageReferences.getAuthToken();
   }
 
+  LoaderManager get loaderManager =>
+      LoaderManager(NavigationService.navigatorKey);
+
   @override
-  void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
+  void onRequest(
+      RequestOptions options, RequestInterceptorHandler handler) async {
     options.headers.addAll({
       "Content-Type": "application/json",
       "Authorization": "Bearer $getAuthToken",
     });
+
+    loaderManager.show();
     return super.onRequest(options, handler);
+  }
+
+  @override
+  void onResponse(
+    Response response,
+    ResponseInterceptorHandler handler,
+  ) {
+    loaderManager.hide();
+    handler.next(response);
   }
 
   @override
@@ -35,6 +50,7 @@ class DioInterceptor extends Interceptor {
       return;
     }
     // Pass the error to the next interceptor in the chain.
+    loaderManager.hide();
     handler.next(err);
   }
 

@@ -1,7 +1,11 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sipaias_fun_mobile/cores/domain/auth/login_request.dart';
+import 'package:sipaias_fun_mobile/cores/presentation/component/loader/loader_manager.dart';
+import 'package:sipaias_fun_mobile/cores/utils/snackbar.dart';
+import 'package:sipaias_fun_mobile/cores/utils/util.dart';
 import 'package:sipaias_fun_mobile/features/auth/domain/usecases/user_sign_in.dart';
 
 part 'auth_event.dart';
@@ -44,12 +48,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     res.fold(
       (l) {
         if (l.code == '404') {
-          emit(const AuthFailure("Username or password is wrong", {}));
+          emit(const AuthFailure("Username or password is wrong"));
           return;
         }
-        emit(AuthFailure(l.message, const {}));
+        emit(AuthFailure(l.message));
       },
       (r) {
+        SnackbarService.showSnackBar();
+
         emit(const AuthSuccess());
       },
     );

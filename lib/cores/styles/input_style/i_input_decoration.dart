@@ -6,7 +6,7 @@ import '../../theme/i_colors.dart';
 enum InputDecorationType { outline, underLine }
 
 class IInputDecoration extends InputDecoration {
-  IInputDecoration({
+  const IInputDecoration({
     required super.hintText,
     required super.suffixIcon,
     required super.prefixIcon,

@@ -38,7 +38,7 @@ final class LoaderManager {
     return Center(
       child: Container(
         constraints: BoxConstraints(
-          maxWidth: size!.width * .8,
+          maxWidth: size.width * .8,
           maxHeight: size.width * .8,
           minWidth: size.width * .5,
         ),

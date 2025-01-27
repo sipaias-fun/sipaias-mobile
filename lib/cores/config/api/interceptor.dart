@@ -28,7 +28,8 @@ class DioInterceptor extends Interceptor {
   void onResponse(
     Response response,
     ResponseInterceptorHandler handler,
-  ) {
+  ) async {
+    await Future.delayed(const Duration(seconds: 5));
     loaderManager.hide();
     handler.next(response);
   }

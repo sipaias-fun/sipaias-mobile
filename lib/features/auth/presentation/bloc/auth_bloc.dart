@@ -52,7 +52,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         emit(AuthFailure(l.message));
       },
       (r) {
-        SnackbarService.showSnackBar();
+        SnackbarService.showSnackBar(text: "Welcome back, ${event.username}");
 
         emit(const AuthSuccess());
       },

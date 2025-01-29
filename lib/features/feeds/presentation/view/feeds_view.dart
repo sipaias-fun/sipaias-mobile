@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:sipaias_fun_mobile/cores/extensions/context_extensions.dart';
 import 'package:sipaias_fun_mobile/cores/presentation/component/wrapper/wrapper.dart';
 import 'package:sipaias_fun_mobile/cores/theme/i_colors.dart';
@@ -62,7 +61,7 @@ class _FeedsViewState extends State<FeedsView> {
           child: Column(
             children: [
               Image.network(
-                "http://localhost:3002/images/$index.jpeg",
+                "http://185.199.52.27:3001/images/$index.jpeg",
                 width: double.infinity,
                 height: 85,
                 fit: BoxFit.cover,
